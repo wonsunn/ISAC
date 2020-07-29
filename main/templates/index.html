@@ -1,0 +1,103 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <title>ISAC</title>
+</head>
+
+<body>
+{% include 'menu.html' %}
+
+<div class="probootstrap-main">
+    <section class="probootstrap-section-half">
+        <div class="probootstrap-image"></div>
+        <div class="probootstrap-text">
+            <div class="probootstrap-inner ">
+                <h1 class="heading">ISAC</h1>
+                <p class="intro">ISAC은 여러분이 받은 피해를 진지하게 생각합니다.<br>어디에, 어떻게 요청하는지 난감하다면 ISAC에게 물어보세요.<br>그 즉시 구제 가능성과 필요한 절차, 그리고 행동 요령을 알려드립니다.</p>
+                <input type='button' class='btn btn-outline-dark' data-toggle="modal" data-target="#counselModal" value="실시간 질문하기" id="questionBtn">
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<div class="modal fade" id="counselModal" tabindex="-1" role="dialog" aria-labelledby="counselModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="counselModalLabel">실시간 질문하기</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"> </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('writeCounsel') }}" method="POST" id="counselForm">
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="title" class="col-form-label">제목</label>
+                            <input type="text" class="form-control" id="inputTitle" name="inputTitle"
+                                   placeholder="제목을 작성해주세요." required="" data-parsley-error-message="제목을 입력해주세요.">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="BigCategory">대분류</label>
+                            <select class="form-control" id="SelectBigCate" name="SelectBigCate" required=""
+                                    data-parsley-error-message="대분류를 선택해주세요.">
+                                <option value="">전체</option>
+                                {% for row in big_cate %}
+                                    <option value="{{ row.name }}">{{ row.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="MiddleCategory">중분류</label>
+                            <select class="form-control" id="SelectMidCate" name="SelectMidCate" required=""
+                                    data-parsley-error-message="중분류를 선택해주세요.">
+                                <option value="">전체</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="SmallCategory">소분류</label>
+                            <select class="form-control" id="SelectSmallCate" name="SelectSmallCate" required=""
+                                    data-parsley-error-message="소분류를 선택해주세요.">
+                                <option value="">전체</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="inputcontent">내용</label>
+                            <textarea class="form-control" rows="8" id="inputContent" placeholder="내용을 작성해주세요."
+                                      name="inputContent" required=""
+                                      data-parsley-error-message="내용을 입력해주세요."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-dark" id="submitCounsel">제출하기</button>
+                        <button type="button" class="btn btn-light" data-dismiss="modal">닫기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="mask"></div>
+    <div id="spinner"></div>
+</div>
+
+<script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/parsley.js') }}"></script>
+<script src="{{ url_for('static', filename='js/loading.js') }}"></script>
+</body>
+</html>
